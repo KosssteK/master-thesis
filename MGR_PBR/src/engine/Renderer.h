@@ -3,12 +3,14 @@
 #include <GLFW/glfw3.h>
 #include <vector>
 #include "Container.h"
+#include "tools/Camera.h"
 
 namespace CAT {
 	class Renderer {
 
 	private:
 		GLFWwindow* window;
+		Camera camera;
 		std::vector<CAT::Container*> children;
 		float r = 0;
 	public:

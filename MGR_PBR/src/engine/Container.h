@@ -8,14 +8,13 @@
 namespace CAT {
 	class Container {
 
-	private:
+	public:
 		std::vector<CAT::Container*> children;
 
 		glm::vec3 position;
 		glm::vec3 rotation;
 		glm::vec3 scale;
 
-	public:
 		Container();
 		~Container();
 		//visual
@@ -25,8 +24,8 @@ namespace CAT {
 
 		//engine
 		CAT::Container* AddChild(CAT::Container &container);
-		glm::mat4 GetMVPMatrix(glm::mat4 parentMVP);
-		virtual void UpdateTransform(glm::mat4 parentMVP);
+		glm::mat4 GetMVPMatrix(glm::mat4 parentModel);
+		virtual void UpdateTransform(glm::mat4 projection, glm::mat4 view, glm::mat4 model);
 		virtual void Draw();
 	};
 }

@@ -17,13 +17,14 @@ Stage::Stage()
 			"res/shaders/texture.shader"
 		))
 {
-	//klaudiaSign.SetRotation(glm::vec3(0.0f, 180.0f, 0.0f));
-	//piramidObj.SetRotation(glm::vec3(45.0f, 45.0f, 45.0f));
+	klaudiaSign.SetPosition(glm::vec3(0.0f, 0.0f, 0.0f));
+	klaudiaSign.SetRotation(glm::vec3(0.0f, 0.0f, -45.0f));
 	piramidObj.SetPosition(glm::vec3(2.0f, 0.0f, 0.0f));
+	piramidObj.SetRotation(glm::vec3(1.0f, 1.0f, 45.0f));
 
-	//AddChild(klaudiaSign);
+	AddChild(klaudiaSign);
 	AddChild(piramidObj);
-	//AddChild(bananaObj);
+	AddChild(bananaObj);
 }
 
 

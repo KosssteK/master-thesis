@@ -53,7 +53,7 @@ CAT::Object::~Object()
 {
 }
 
-CAT::Container * CAT::Object::addChild(CAT::Container & container)
+CAT::Container * CAT::Object::AddChild(CAT::Container & container)
 {
 	std::cout << "UNABLE TO ADD CHILD!" << std::endl;
 	return nullptr;
@@ -82,18 +82,16 @@ void CAT::Object::LoadObjectFromFile(const std::string & path)
 	}
 }
 
-void CAT::Object::UpdateTransform(glm::mat4 parentMVP)
+void CAT::Object::UpdateTransform(glm::mat4 projection, glm::mat4 view, glm::mat4 model)
 {
-	//std::cout << "UPDATE TRANSFORM OBJECT" << std::endl;
-	shader.Bind();
-	glm::mat4 mvp = GetMVPMatrix(parentMVP);
-	shader.SetUniformMat4f("u_MVP", mvp);
+	MVP = projection * view * GetMVPMatrix(model);
 }
 
 void CAT::Object::Draw()
 {
 	texture.Bind();
 	shader.Bind();
+	shader.SetUniformMat4f("u_MVP", MVP);
 	vertexArray.Bind();
 	GLCall(glDrawArrays(GL_TRIANGLES, 0, trianglesNumber));
 }
