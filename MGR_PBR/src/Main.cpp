@@ -13,13 +13,16 @@
 
 #include "engine/render/Helpers.h"
 #include "Stage.h"
+#include "MilkyWayStage.h"
 
 
 int main() {
 	
 	CAT::Renderer renderer;
-	Stage stage;
-	renderer.AddChild(stage);		
+	//Stage stage;	
+	//renderer.AddChild(stage);	
+	MilkyWayStage milkyStage;
+	renderer.AddChild(milkyStage);
 	renderer.StartMainLoop();
 
 	return 0;

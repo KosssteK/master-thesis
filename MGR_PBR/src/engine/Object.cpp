@@ -82,6 +82,11 @@ void CAT::Object::LoadObjectFromFile(const std::string & path)
 	}
 }
 
+void CAT::Object::Update()
+{
+
+}
+
 void CAT::Object::UpdateTransform(glm::mat4 projection, glm::mat4 view, glm::mat4 model)
 {
 	MVP = projection * view * GetMVPMatrix(model);

@@ -26,6 +26,8 @@ namespace CAT{
 		//engine stuff
 		CAT::Container* AddChild(CAT::Container &container);
 		void LoadObjectFromFile(const std::string & path);
+
+		void Update() override;
 		void UpdateTransform(glm::mat4 projection, glm::mat4 view, glm::mat4 model) override;
 		void Draw() override;
 	};

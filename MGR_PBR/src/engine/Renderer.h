@@ -19,6 +19,7 @@ namespace CAT {
 
 		void StartMainLoop();
 		CAT::Container* AddChild(CAT::Container &container);
+		void Update();
 		void UpdateTransform();
 		void Draw();
 	};

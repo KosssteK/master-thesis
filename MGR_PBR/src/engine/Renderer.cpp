@@ -52,6 +52,7 @@ void CAT::Renderer::StartMainLoop()
 
 		camera.UpdateCamera(window);
 
+		Update();
 		UpdateTransform();
 		Draw();
 		/* Swap front and back buffers */
@@ -71,6 +72,12 @@ CAT::Container * CAT::Renderer::AddChild(CAT::Container &container)
 }
 
 
+void CAT::Renderer::Update()
+{
+	for (int i = 0; i < children.size(); i++) {
+		children[i]->Update();
+	}
+}
 
 void CAT::Renderer::UpdateTransform()
 {

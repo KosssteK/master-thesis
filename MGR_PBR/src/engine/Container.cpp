@@ -51,6 +51,13 @@ glm::mat4 CAT::Container::GetMVPMatrix(glm::mat4 parentModel)
 	return parentModel * model;
 }
 
+void CAT::Container::Update()
+{
+	for (int i = 0; i < children.size(); i++) {
+		children[i]->Update();
+	}
+}
+
 void CAT::Container::UpdateTransform(glm::mat4 projection, glm::mat4 view, glm::mat4 model)
 {
 	for (int i = 0; i < children.size(); i++) {
