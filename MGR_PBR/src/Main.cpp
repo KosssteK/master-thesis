@@ -9,6 +9,7 @@
 #include "engine/Renderer.h"
 #include "engine/Container.h"
 #include "engine/Object.h"
+#include "engine/Skybox.h"
 
 #include "engine/render/Helpers.h"
 #include "Stage.h"

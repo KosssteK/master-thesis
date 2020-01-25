@@ -38,6 +38,7 @@ Stage::Stage()
 	lightSource.SetScale(glm::vec3(0.3f, 0.3f, 0.3f));
 
 
+	AddChild(skybox);
 	AddChild(originLine);
 	AddChild(klaudiaSign);
 	AddChild(piramidObj);
