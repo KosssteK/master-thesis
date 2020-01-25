@@ -9,7 +9,7 @@ CAT::Renderer::Renderer() {
 		std::cout << "error during glfwInit()" << std::endl;
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(800, 600, "Hello World", NULL, NULL);
+	window = glfwCreateWindow(1024, 768, "Hello World", NULL, NULL);
 	if (!window)
 	{
 		std::cout << "glfwTerminate()" << std::endl;

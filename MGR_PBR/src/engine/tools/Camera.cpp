@@ -1,4 +1,5 @@
 #include "Camera.h"
+#include <iostream>
 
 #include "../vendor/glm/gtc/matrix_transform.hpp"
 #define GLM_ENABLE_EXPERIMENTAL
@@ -6,12 +7,12 @@
 
 
 CAT::Camera::Camera()
-	: m_CameraSpeed(0.2f)
+	: m_CameraSpeed(0.01f)
 {
-	m_CameraPosition = glm::vec3(0.0f, 0.0f, 4.0f);
-	m_ViewDirection = glm::vec3(0.0f, 0.0f, -1.0f);
+	m_CameraPosition = glm::vec3(4.0f, 4.0f, 4.0f);
+	m_ViewDirection = glm::vec3(-0.614829f, -0.503806f, -0.606764f);
 	m_UP = glm::vec3(0.0f, 1.0f, 0.0f);
-	m_SideDirection = glm::cross(m_ViewDirection, m_UP);
+	m_SideDirection = -glm::cross(m_ViewDirection, m_UP);
 }
 
 
@@ -91,8 +92,6 @@ void CAT::Camera::SetCameraView(glm::vec2 & delta)
 	//m_SideDirection = glm::cross(m_ViewDirection, m_UP);
 	//m_ViewDirection = glm::mat3(glm::rotate(delta.y * 0.002f, m_SideDirection)) * m_ViewDirection;
 	//m_UP = glm::cross(m_SideDirection, m_ViewDirection);
-	
-
 }
 
 void CAT::Camera::MoveForward()

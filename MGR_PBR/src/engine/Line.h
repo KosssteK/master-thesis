@@ -1,33 +1,28 @@
 #pragma once
 #include "Container.h"
-#include "render/Shader.h"
 #include "render/VertexArray.h"
-#include "render/Texture.h"
-#include "render/Helpers.h"
+#include "render/Shader.h"
 #include "vendor/glm/glm.hpp"
 
-namespace CAT{
-	class Object : public Container
+namespace CAT {
+	class Line : public Container
 	{
 	public:
 		VertexArray vertexArray;
 		Shader shader;
-		Texture texture;
 		float verticies[500];
 		unsigned int verticiesNumber;
-		unsigned int trianglesNumber;
+		unsigned int linesNumber;
 		glm::mat4 MVP;
 
-		Object();
-		Object(const std::string& path);
-		Object(Properties props);
-		~Object();
+		Line();
+		Line(const std::string& path);
+		~Line();
 
-		//engine stuff
 		CAT::Container* AddChild(CAT::Container &container);
 		void LoadObjectFromFile(const std::string & path);
 		void UpdateTransform(glm::mat4 projection, glm::mat4 view, glm::mat4 model) override;
-		void Draw() override;
+		void Draw();
 	};
-
 }
+
