@@ -2,8 +2,8 @@
 
 Sun::Sun()
 	:sun(CAT::Properties(
-		"res/objects/piramid.txt",
-		"res/objects/multicolor.png",
+		"res/objects/cubeLow.obj",
+		"res/objects/sun.jpg",
 		"res/shaders/texture.shader"
 	)),
 	rotation(0)

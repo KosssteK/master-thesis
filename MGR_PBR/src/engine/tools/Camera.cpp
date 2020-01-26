@@ -78,7 +78,7 @@ void CAT::Camera::UpdateCamera(GLFWwindow * window)
 
 glm::mat4 CAT::Camera::GetProjectionMatrix()
 {
-	return glm::perspective(glm::radians(90.0f), 4.0f / 3.0f, 0.1f, 1000.f);
+	return glm::perspective(glm::radians(45.0f), 16.0f/ 9.0f, 0.1f, 1000.f);
 }
 
 void CAT::Camera::SetCameraView(glm::vec2 & delta)

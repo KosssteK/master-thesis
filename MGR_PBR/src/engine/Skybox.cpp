@@ -1,10 +1,11 @@
 #include "Skybox.h"
+#include <string>
 #include "render/VertexBufferLayout.h"
 
-CAT::Skybox::Skybox()
+CAT::Skybox::Skybox(const std::string &path)
 	: shader("res/shaders/skybox.shader"),
 	verticiesNumber(0),
-	texture("res/objects/skybox/vr"), 
+	texture(path),
 	m_Size(500),
 	m_PositionsCount(108), 
 	m_Positions{

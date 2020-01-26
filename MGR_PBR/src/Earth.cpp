@@ -2,8 +2,8 @@
 
 Earth::Earth()
 	:earth(CAT::Properties(
-		"res/objects/piramid.txt",
-		"res/objects/multicolor.png",
+		"res/objects/cubeLow.obj",
+		"res/objects/earth.jpg",
 		"res/shaders/texture.shader"
 	)),
 	rotation(0)

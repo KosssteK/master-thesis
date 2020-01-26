@@ -12,7 +12,7 @@ SkyboxTexture::SkyboxTexture(const std::string & path)
 	GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
 	GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
 
-	std::string sides[] = { "_rt", "_lf", "_up", "_dn", "_bk", "_ft" };
+	std::string sides[] = { "_rt", "_lf",  "_dn","_up", "_bk", "_ft" };
 	std::string fileName;
 	for (int i = 0; i < 6; i++) {
 		fileName = path + sides[i] + ".tga";

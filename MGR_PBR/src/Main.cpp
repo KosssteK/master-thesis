@@ -19,10 +19,10 @@
 int main() {
 	
 	CAT::Renderer renderer;
-	//Stage stage;	
-	//renderer.AddChild(stage);	
-	MilkyWayStage milkyStage;
-	renderer.AddChild(milkyStage);
+	Stage stage;	
+	renderer.AddChild(stage);	
+	//MilkyWayStage milkyStage;
+	//renderer.AddChild(milkyStage);
 	renderer.StartMainLoop();
 
 	return 0;

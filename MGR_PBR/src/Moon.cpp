@@ -2,8 +2,8 @@
 
 Moon::Moon()
 	:moon(CAT::Properties(
-		"res/objects/piramid.txt",
-		"res/objects/multicolor.png",
+		"res/objects/cubeLow.obj",
+		"res/objects/moon.jpg",
 		"res/shaders/texture.shader"
 	))
 {

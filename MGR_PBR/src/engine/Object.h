@@ -13,7 +13,7 @@ namespace CAT{
 		VertexArray vertexArray;
 		Shader shader;
 		Texture texture;
-		float verticies[500];
+		float verticies[50000];
 		unsigned int verticiesNumber;
 		unsigned int trianglesNumber;
 		glm::mat4 MVP;
@@ -25,7 +25,7 @@ namespace CAT{
 
 		//engine stuff
 		CAT::Container* AddChild(CAT::Container &container);
-		void LoadObjectFromFile(const std::string & path);
+		void LoadObj(const std::string & path);
 
 		void Update() override;
 		void UpdateTransform(glm::mat4 projection, glm::mat4 view, glm::mat4 model) override;

@@ -20,7 +20,7 @@ namespace CAT {
 		float m_Positions[108];
 		glm::mat4 MVP;
 
-		Skybox();
+		Skybox(const std::string &path);
 		~Skybox();
 
 		CAT::Container* AddChild(CAT::Container &container);
