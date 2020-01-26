@@ -2,7 +2,7 @@
 
 Sun::Sun()
 	:sun(CAT::Properties(
-		"res/objects/cubeLow.obj",
+		"res/objects/sphere.obj",
 		"res/objects/sun.jpg",
 		"res/shaders/texture.shader"
 	)),

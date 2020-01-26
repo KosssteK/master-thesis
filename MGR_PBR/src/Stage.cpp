@@ -3,9 +3,9 @@
 Stage::Stage()
 	:
 	klaudiaSign(CAT::Properties(
-			"res/objects/cubeLow.obj",
-			"res/objects/triangle.png",
-			"res/shaders/texture.shader"
+			"res/objects/cube.obj",
+			"res/objects/sun.jpg",
+			"res/shaders/blin_phong.shader"
 		)),
 	//piramidObj(CAT::Properties(
 	//		"res/objects/piramid.txt",
@@ -25,8 +25,9 @@ Stage::Stage()
 	originLine("res/objects/originLines.txt"),
 	skybox("res/objects/skybox/glacier")
 {
-	klaudiaSign.SetPosition(glm::vec3(0.0f, 0.0f, -2.0f));
-	klaudiaSign.SetRotation(glm::vec3(0.0f, 0.0f, -45.0f));
+	klaudiaSign.SetPosition(glm::vec3(0.0f, 1.0f, -4.0f));
+	//klaudiaSign.SetRotation(glm::vec3(0.0f, 0.0f, -45.0f));
+	//klaudiaSign.SetScale(glm::vec3(2.0f, 2.0f, 2.0f));
 	//
 	//piramidObj.SetPosition(glm::vec3(2.0f, 0.0f, 0.0f));
 	//piramidObj.SetRotation(glm::vec3(1.0f, 1.0f, 45.0f));

@@ -2,9 +2,9 @@
 
 Earth::Earth()
 	:earth(CAT::Properties(
-		"res/objects/cubeLow.obj",
+		"res/objects/sphere.obj",
 		"res/objects/earth.jpg",
-		"res/shaders/texture.shader"
+		"res/shaders/blin_phong.shader"
 	)),
 	rotation(0)
 {
@@ -21,7 +21,7 @@ Earth::~Earth()
 
 void Earth::Update()
 {
-	rotation -= 0.09;
+	rotation += 0.09;
 	SetRotation(glm::vec3(0.0f, rotation, 0.0f));
 	if (rotation == 6.28) {
 		rotation = 0;

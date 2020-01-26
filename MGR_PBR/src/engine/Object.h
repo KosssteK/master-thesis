@@ -16,7 +16,10 @@ namespace CAT{
 		float verticies[50000];
 		unsigned int verticiesNumber;
 		unsigned int trianglesNumber;
-		glm::mat4 MVP;
+		glm::mat4 m_Projection;
+		glm::mat4 m_View;
+		glm::mat4 m_Model;
+		float rotate = 0;
 
 		Object();
 		Object(const std::string& path);

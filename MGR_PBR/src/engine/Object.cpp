@@ -139,19 +139,27 @@ void CAT::Object::LoadObj(const std::string & path)
 
 void CAT::Object::Update()
 {
-
+	rotate += 0.02;
+	SetRotation(glm::vec3(0.0, rotate, 0.0));
 }
 
 void CAT::Object::UpdateTransform(glm::mat4 projection, glm::mat4 view, glm::mat4 model)
 {
-	MVP = projection * view * GetMVPMatrix(model);
+	m_Projection = projection;
+	m_View = view;
+	m_Model = GetMVPMatrix(model);
 }
 
 void CAT::Object::Draw()
 {
 	texture.Bind();
 	shader.Bind();
-	shader.SetUniformMat4f("u_MVP", MVP);
+	shader.SetUniformMat4f("u_Projection", m_Projection);
+	shader.SetUniformMat4f("u_View", m_View);
+	shader.SetUniformMat4f("u_Model", m_Model);
+	//shader.SetUniformMat4f("u_MVP", m_Projection * m_View * m_Model);
+
 	vertexArray.Bind();
+	//std::cout << verticiesNumber << std::endl;
 	GLCall(glDrawArrays(GL_TRIANGLES, 0, trianglesNumber));
 }

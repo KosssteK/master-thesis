@@ -2,9 +2,9 @@
 
 Moon::Moon()
 	:moon(CAT::Properties(
-		"res/objects/cubeLow.obj",
+		"res/objects/sphere.obj",
 		"res/objects/moon.jpg",
-		"res/shaders/texture.shader"
+		"res/shaders/blin_phong.shader"
 	))
 {
 	SetPosition(glm::vec3(10.0f, 0.0f, 0.0f));
