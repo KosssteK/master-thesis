@@ -61,7 +61,7 @@ void main()
 	float spec = pow(max(dot(observerDirection, reflectDirection), 0.0), 256);
 	vec3 specular = specularStrength * spec * lightColor;
 
-	vec3 result = (ambient + diffuse + specular) * texture(u_Texture, f_TexCoord).xyz;
+	vec3 result = (ambient + diffuse) * texture(u_Texture, f_TexCoord).xyz;
 	color = vec4(result, 1.0);
 };
 

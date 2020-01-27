@@ -13,7 +13,7 @@ namespace CAT{
 		VertexArray vertexArray;
 		Shader shader;
 		Texture texture;
-		float verticies[50000];
+		float* verticies;
 		unsigned int verticiesNumber;
 		unsigned int trianglesNumber;
 		glm::mat4 m_Projection;

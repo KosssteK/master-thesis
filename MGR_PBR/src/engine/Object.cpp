@@ -53,6 +53,7 @@ CAT::Object::Object(Properties props)
 
 CAT::Object::~Object()
 {
+	delete[] verticies;
 }
 
 CAT::Container * CAT::Object::AddChild(CAT::Container & container)
@@ -110,6 +111,7 @@ void CAT::Object::LoadObj(const std::string & path)
 		}
 	}
 
+	verticies = new float[assembly.size() * 8];
 	verticiesNumber = 0;
 	trianglesNumber = assembly.size();
 	for (int i = 0; i < assembly.size(); i++) {
@@ -157,9 +159,7 @@ void CAT::Object::Draw()
 	shader.SetUniformMat4f("u_Projection", m_Projection);
 	shader.SetUniformMat4f("u_View", m_View);
 	shader.SetUniformMat4f("u_Model", m_Model);
-	//shader.SetUniformMat4f("u_MVP", m_Projection * m_View * m_Model);
 
 	vertexArray.Bind();
-	//std::cout << verticiesNumber << std::endl;
 	GLCall(glDrawArrays(GL_TRIANGLES, 0, trianglesNumber));
 }
