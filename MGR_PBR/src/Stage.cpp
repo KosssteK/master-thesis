@@ -3,9 +3,9 @@
 Stage::Stage()
 	:
 	klaudiaSign(CAT::Properties(
-		"res/objects/sphere.obj",
-		"res/objects/brick.jpg",
-		"res/shaders/blin_phong.shader"
+		"res/objects/cube.obj",
+		"res/objects/red.jpg",
+		"res/shaders/pbr.shader"
 	)),
 	originLine("res/objects/originLines.txt"),
 	skybox("res/skybox/glacier")
