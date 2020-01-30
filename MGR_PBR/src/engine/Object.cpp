@@ -1,4 +1,5 @@
 #include "Object.h"
+#include "tools/Camera.h"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -141,25 +142,36 @@ void CAT::Object::LoadObj(const std::string & path)
 
 void CAT::Object::Update()
 {
+	//this should be empty, debug only
 	rotate += 0.02;
 	SetRotation(glm::vec3(0.0, rotate, 0.0));
 }
 
 void CAT::Object::UpdateTransform(glm::mat4 projection, glm::mat4 view, glm::mat4 model)
 {
+	Update();
 	m_Projection = projection;
 	m_View = view;
-	m_Model = GetMVPMatrix(model);
+	//m_Model = GetMVPMatrix(model);
+	m_Model = model;
 }
 
 void CAT::Object::Draw()
 {
+	vertexArray.Bind();
 	texture.Bind();
 	shader.Bind();
 	shader.SetUniformMat4f("u_Projection", m_Projection);
 	shader.SetUniformMat4f("u_View", m_View);
-	shader.SetUniformMat4f("u_Model", m_Model);
-
-	vertexArray.Bind();
-	GLCall(glDrawArrays(GL_TRIANGLES, 0, trianglesNumber));
+	shader.SetUniform3fv("u_CameraPosition", Camera::getSingleton().GetCameraPosition());
+	int gridDim = 10;
+	for (int i = 0; i < gridDim; i++) {
+		for (int j = 0; j < gridDim; j++) {
+			SetPosition(glm::vec3((float)(j * 2) - gridDim, (i * 2) - gridDim, -30.0f));
+			shader.SetUniformMat4f("u_Model", GetMVPMatrix(m_Model));
+			shader.SetUniform1f("metallic", 1.0f - ((float)i / 10.0f));
+			shader.SetUniform1f("roughness", 1.0f - ((float)j / 10.0f));
+			GLCall(glDrawArrays(GL_TRIANGLES, 0, trianglesNumber));
+		}
+	}
 }

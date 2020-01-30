@@ -50,9 +50,8 @@ void CAT::Renderer::StartMainLoop()
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		camera.UpdateCamera(window);
+		Camera::getSingleton().UpdateCamera(window);
 
-		Update();
 		UpdateTransform();
 		Draw();
 		/* Swap front and back buffers */
@@ -71,20 +70,12 @@ CAT::Container * CAT::Renderer::AddChild(CAT::Container &container)
 	return &container;
 }
 
-
-void CAT::Renderer::Update()
-{
-	for (int i = 0; i < children.size(); i++) {
-		children[i]->Update();
-	}
-}
-
 void CAT::Renderer::UpdateTransform()
 {
 	//std::cout << "UPDATE TRANSFORM RENDERER" << std::endl;
 	r += 0.01;
-	glm::mat4 projection = camera.GetProjectionMatrix();
-	glm::mat4 view = camera.GetViewMatrix();
+	glm::mat4 projection = Camera::getSingleton().GetProjectionMatrix();
+	glm::mat4 view = Camera::getSingleton().GetViewMatrix();
 	glm::mat4 model(1.0f);
 
 

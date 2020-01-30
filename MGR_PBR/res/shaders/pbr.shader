@@ -32,19 +32,19 @@ in vec2 f_textureCoords;
 in vec3 f_position;
 in vec3 f_normal;
 
-vec3 cameraPosition = vec3(4.0, 4.0, 4.0); //later to be uniform
+uniform vec3 u_CameraPosition;
 
 uniform sampler2D u_Texture;
 
 vec3 albedo = texture(u_Texture, f_textureCoords).xyz;
-//vec3 albedo = vec3(20.0,0.0,0.0)//texture(u_Texture, f_textureCoords).xyz;
-float metallic = 1.0;
-float roughness = 0.1;
+////vec3 albedo = vec3(20.0,0.0,0.0)//texture(u_Texture, f_textureCoords).xyz;
+//float metallic = 1.0;
+//float roughness = 0.1;
 float ao = 1.0;
 
 //uniform vec3 albedo;
-//uniform float metallic;
-//uniform float roughness;
+uniform float metallic;
+uniform float roughness;
 //uniform float ao;
 
 //uniform vec3 lightPositions[4];
@@ -63,7 +63,7 @@ vec3 fresnelSchlick(float cosTheta, vec3 F0);
 void main()
 {
 	vec3 N = normalize(f_normal);
-	vec3 V = normalize(cameraPosition);
+	vec3 V = normalize(u_CameraPosition);
 
 	vec3 Lo = vec3(0.0);
 	for (int i = 0; i < 4; i++) {
@@ -83,7 +83,7 @@ void main()
 
 		vec3 numerator = NDF * G * F;
 		float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0);
-		vec3 specular = numerator / max(denominator, 0.001);
+		vec3 specular = numerator / max(denominator, 0.0001);
 
 		vec3 kS = F;
 		vec3 kD = vec3(1.0) - kS;

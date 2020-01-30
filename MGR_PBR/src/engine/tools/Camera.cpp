@@ -15,11 +15,6 @@ CAT::Camera::Camera()
 	m_SideDirection = -glm::cross(m_ViewDirection, m_UP);
 }
 
-
-CAT::Camera::~Camera()
-{
-}
-
 glm::mat4 CAT::Camera::GetViewMatrix()
 {
 	return glm::lookAt(m_CameraPosition, m_CameraPosition + m_ViewDirection, m_UP);
@@ -92,6 +87,11 @@ void CAT::Camera::SetCameraView(glm::vec2 & delta)
 	//m_SideDirection = glm::cross(m_ViewDirection, m_UP);
 	//m_ViewDirection = glm::mat3(glm::rotate(delta.y * 0.002f, m_SideDirection)) * m_ViewDirection;
 	//m_UP = glm::cross(m_SideDirection, m_ViewDirection);
+}
+
+glm::vec3 CAT::Camera::GetCameraPosition()
+{
+	return m_CameraPosition;
 }
 
 void CAT::Camera::MoveForward()
