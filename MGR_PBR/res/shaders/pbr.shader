@@ -65,32 +65,32 @@ void main()
 	vec3 N = normalize(f_normal);
 	vec3 V = normalize(u_CameraPosition);
 
+
+	vec3 F0 = vec3(0.04);
+	F0 = mix(F0, albedo, metallic);
+
 	vec3 Lo = vec3(0.0);
 	for (int i = 0; i < 4; i++) {
+
 		vec3 L = normalize(lightPositions[i] - f_position); //light direction vector
 		vec3 H = normalize(V + L); // halfway vector
-
 		float distance = length(lightPositions[i] - f_position);
 		float attenuation = 1.0 / (distance * distance);
 		vec3 radiance = lightColors[i] * attenuation;
 
-		vec3 F0 = vec3(0.04);
-		F0 = mix(F0, albedo, metallic);
 
 		float NDF = DistributionGGX(N, H, roughness);
 		float G = GeometrySmith(N, V, L, roughness);
 		vec3 F = fresnelSchlick(max(dot(H, V), 0.0), F0);
 
-		vec3 numerator = NDF * G * F;
+		vec3 nominator = NDF * G * F;
 		float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0);
-		vec3 specular = numerator / max(denominator, 0.0001);
+		vec3 specular = numerator / max(denominator, 0.001);
 
 		vec3 kS = F;
 		vec3 kD = vec3(1.0) - kS;
 
 		kD *= 1.0 - metallic;
-
-		const float PI = 3.14159265359;
 
 		float NdotL = max(dot(N, L), 0.0);
 		Lo += (kD * albedo / PI + specular) * radiance * NdotL;

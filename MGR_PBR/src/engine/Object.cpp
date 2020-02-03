@@ -164,13 +164,13 @@ void CAT::Object::Draw()
 	shader.SetUniformMat4f("u_Projection", m_Projection);
 	shader.SetUniformMat4f("u_View", m_View);
 	shader.SetUniform3fv("u_CameraPosition", Camera::getSingleton().GetCameraPosition());
-	int gridDim = 10;
+	int gridDim = 5;
 	for (int i = 0; i < gridDim; i++) {
 		for (int j = 0; j < gridDim; j++) {
-			SetPosition(glm::vec3((float)(j * 2) - gridDim, (i * 2) - gridDim, -30.0f));
+			SetPosition(glm::vec3((float)(j * 2) - gridDim, (i * 2) - gridDim, -15.0f));
 			shader.SetUniformMat4f("u_Model", GetMVPMatrix(m_Model));
-			shader.SetUniform1f("metallic", 1.0f - ((float)i / 10.0f));
-			shader.SetUniform1f("roughness", 1.0f - ((float)j / 10.0f));
+			shader.SetUniform1f("metallic", 1.0f - ((float)i / (float)gridDim));
+			shader.SetUniform1f("roughness", 1.0f - ((float)j / (float)gridDim));
 			GLCall(glDrawArrays(GL_TRIANGLES, 0, trianglesNumber));
 		}
 	}

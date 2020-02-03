@@ -3,7 +3,7 @@
 Stage::Stage()
 	:
 	klaudiaSign(CAT::Properties(
-		"res/objects/sphereHigh.obj",
+		"res/objects/sphereUltra.obj",
 		"res/objects/red.jpg",
 		"res/shaders/pbr.shader"
 	)),

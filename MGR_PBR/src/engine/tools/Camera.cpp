@@ -9,7 +9,8 @@
 CAT::Camera::Camera()
 	: m_CameraSpeed(0.01f)
 {
-	m_CameraPosition = glm::vec3(4.0f, 4.0f, 4.0f);
+	//m_CameraPosition = glm::vec3(4.0f, 4.0f, 4.0f);
+	m_CameraPosition = glm::vec3(0.0f, 0.0f, 0.0f);
 	m_ViewDirection = glm::vec3(-0.614829f, -0.503806f, -0.606764f);
 	m_UP = glm::vec3(0.0f, 1.0f, 0.0f);
 	m_SideDirection = -glm::cross(m_ViewDirection, m_UP);
