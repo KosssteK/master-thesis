@@ -169,9 +169,10 @@ void CAT::Object::Draw()
 		for (int j = 0; j < gridDim; j++) {
 			SetPosition(glm::vec3((float)(j * 2) - gridDim, (i * 2) - gridDim, -15.0f));
 			shader.SetUniformMat4f("u_Model", GetMVPMatrix(m_Model));
-			shader.SetUniform1f("metallic", 1.0f - ((float)i / (float)gridDim));
-			shader.SetUniform1f("roughness", 1.0f - ((float)j / (float)gridDim));
+			shader.SetUniform1f("metallic", 0.1f +((float)i / (float)gridDim));
+			shader.SetUniform1f("roughness", 0.1f + ((float)j / (float)gridDim));
 			GLCall(glDrawArrays(GL_TRIANGLES, 0, trianglesNumber));
 		}
 	}
+	std::cout << std::endl;
 }
