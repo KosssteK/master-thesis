@@ -72,8 +72,6 @@ CAT::Container * CAT::Renderer::AddChild(CAT::Container &container)
 
 void CAT::Renderer::UpdateTransform()
 {
-	//std::cout << "UPDATE TRANSFORM RENDERER" << std::endl;
-	r += 0.01;
 	glm::mat4 projection = Camera::getSingleton().GetProjectionMatrix();
 	glm::mat4 view = Camera::getSingleton().GetViewMatrix();
 	glm::mat4 model(1.0f);
