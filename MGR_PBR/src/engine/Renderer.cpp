@@ -34,7 +34,7 @@ CAT::Renderer::Renderer() {
 	GLCall(glCullFace(GL_BACK));
 	GLCall(glEnable(GL_BLEND));
 	GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-	GLCall(glClearColor(0.2f, 0.3f, 0.8f, 1.0f));
+	//GLCall(glClearColor(0.2f, 0.3f, 0.8f, 1.0f));
 }
 
 CAT::Renderer::~Renderer()

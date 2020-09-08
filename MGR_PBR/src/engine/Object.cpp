@@ -164,7 +164,7 @@ void CAT::Object::Draw()
 	shader.SetUniformMat4f("u_Projection", m_Projection);
 	shader.SetUniformMat4f("u_View", m_View);
 	shader.SetUniform3fv("u_CameraPosition", Camera::getSingleton().GetCameraPosition());
-	int gridDim = 5;
+	int gridDim = 7;
 	for (int i = 0; i < gridDim; i++) {
 		for (int j = 0; j < gridDim; j++) {
 			SetPosition(glm::vec3((float)(j * 2) - gridDim, (i * 2) - gridDim, -15.0f));
