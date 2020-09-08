@@ -4,6 +4,9 @@ Sun::Sun()
 	:sun(CAT::Properties(
 		"res/objects/sphere.obj",
 		"res/objects/sun.jpg",
+		"res/objects/sun.jpg",
+		"res/objects/sun.jpg",
+		"res/objects/sun.jpg",
 		"res/shaders/texture.shader"
 	)),
 	rotation(0)

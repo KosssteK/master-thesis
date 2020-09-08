@@ -13,6 +13,9 @@ namespace CAT{
 		VertexArray vertexArray;
 		Shader shader;
 		Texture texture;
+		Texture roughness;
+		Texture metallic;
+		Texture normals;
 		float* verticies;
 		unsigned int verticiesNumber;
 		unsigned int trianglesNumber;

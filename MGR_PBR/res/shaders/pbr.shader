@@ -35,16 +35,20 @@ in vec3 f_normal;
 uniform vec3 u_CameraPosition;
 
 uniform sampler2D u_Texture;
+uniform sampler2D u_Rough;
+uniform sampler2D u_Metal;
+uniform sampler2D u_Normal;
 
-vec3 albedo = texture(u_Texture, f_textureCoords).xyz;
+
+
 ////vec3 albedo = vec3(20.0,0.0,0.0)//texture(u_Texture, f_textureCoords).xyz;
 //float metallic = 1.0;
 //float roughness = 0.1;
 float ao = 1.0;
 
 //uniform vec3 albedo;
-uniform float metallic;
-uniform float roughness;
+//uniform float metallic;
+//uniform float roughness;
 //uniform float ao;
 
 //uniform vec3 lightPositions[4];
@@ -60,9 +64,20 @@ float GeometrySchlickGGX(float NdotV, float roughness);
 float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness);
 vec3 fresnelSchlick(float cosTheta, vec3 F0);
 
+vec3 getNormalFromMap();
+
 void main()
 {
+	vec3 albedo = pow(texture(u_Texture, f_textureCoords).rgb, vec3(2.2));
+	float roughness = texture(u_Rough, f_textureCoords).r;
+	float metallic = texture(u_Metal, f_textureCoords).r;
+
+
 	vec3 N = normalize(f_normal);
+	//vec3 N = getNormalFromMap();
+	//vec3 N = texture(u_Normal, f_textureCoords).xyz;
+
+
 	vec3 V = normalize(u_CameraPosition - f_position);
 
 
@@ -142,4 +157,21 @@ float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
 	float ggx1 = GeometrySchlickGGX(NdotL, roughness);
 
 	return ggx1 * ggx2;
+}
+
+vec3 getNormalFromMap()
+{
+	vec3 tangentNormal = texture(u_Normal, f_textureCoords).xyz * 2.0 - 1.0;
+
+	vec3 Q1 = dFdx(f_position);
+	vec3 Q2 = dFdy(f_position);
+	vec2 st1 = dFdx(f_textureCoords);
+	vec2 st2 = dFdy(f_textureCoords);
+
+	vec3 N = normalize(f_normal);
+	vec3 T = normalize(Q1*st2.t - Q2 * st1.t);
+	vec3 B = -normalize(cross(N, T));
+	mat3 TBN = mat3(T, B, N);
+
+	return normalize(TBN * tangentNormal);
 }

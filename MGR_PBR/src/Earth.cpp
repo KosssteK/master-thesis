@@ -4,6 +4,9 @@ Earth::Earth()
 	:earth(CAT::Properties(
 		"res/objects/sphere.obj",
 		"res/objects/earth.jpg",
+		"res/objects/earth.jpg",
+		"res/objects/earth.jpg",
+		"res/objects/earth.jpg",
 		"res/shaders/blin_phong.shader"
 	)),
 	rotation(0)

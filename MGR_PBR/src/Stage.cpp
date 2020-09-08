@@ -4,7 +4,10 @@ Stage::Stage()
 	:
 	klaudiaSign(CAT::Properties(
 		"res/objects/sphereHi1.obj",
-		"res/objects/red.jpg",
+		"res/objects/rustediron2_basecolor.png",
+		"res/objects/rustediron2_roughness.png",
+		"res/objects/rustediron2_metallic.png",
+		"res/objects/rustediron2_normal.png",
 		"res/shaders/pbr.shader"
 	)),
 	originLine("res/objects/originLines.txt"),

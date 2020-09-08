@@ -14,15 +14,21 @@
 
 CAT::Object::Object()
 	:shader("res/shaders/basic.shader"),
-	texture("res/objects/triangle.png")
+	texture("res/objects/triangle.png"),
+	roughness("res/objects/triangle.png"),
+	metallic("res/objects/triangle.png"),
+	normals("res/objects/triangle.png")
 {
 	std::cout << "create CAT::OBJECT" << std::endl;
 }
 
 CAT::Object::Object(const std::string & path)
 	: shader("res/shaders/basic.shader"), 
-	verticiesNumber(0), 
-	texture("res/objects/triangle.png")
+	verticiesNumber(0),
+	texture("res/objects/triangle.png"),
+	roughness("res/objects/triangle.png"),
+	metallic("res/objects/triangle.png"),
+	normals("res/objects/triangle.png")
 {
 	shader.Unbind();
 	LoadObj(path);
@@ -36,7 +42,10 @@ CAT::Object::Object(const std::string & path)
 }
 CAT::Object::Object(Properties props)
 	:shader(props.shaderPath == "" ?"res/shaders/basic.shader": props.shaderPath),
-	texture(props.texturePath)
+	texture(props.texturePath),
+	roughness(props.rghPath),
+	metallic(props.mtlPath),
+	normals(props.mtlPath)
 {
 	shader.Unbind();
 	LoadObj(props.objectPath);
@@ -143,7 +152,7 @@ void CAT::Object::LoadObj(const std::string & path)
 void CAT::Object::Update()
 {
 	//this should be empty, debug only
-	rotate += 0.02;
+	rotate += 0.1;
 	SetRotation(glm::vec3(0.0, rotate, 0.0));
 }
 
@@ -160,17 +169,26 @@ void CAT::Object::Draw()
 {
 	vertexArray.Bind();
 	texture.Bind();
+	roughness.Bind(1);
+	metallic.Bind(2);
+	normals.Bind(3);
+
 	shader.Bind();
+	shader.SetUniform1i("u_Texture", 0);
+	shader.SetUniform1i("u_Rough", 1);
+	shader.SetUniform1i("u_Metal", 2);
+	shader.SetUniform1i("u_Normal", 3);
+
 	shader.SetUniformMat4f("u_Projection", m_Projection);
 	shader.SetUniformMat4f("u_View", m_View);
 	shader.SetUniform3fv("u_CameraPosition", Camera::getSingleton().GetCameraPosition());
-	int gridDim = 7;
+	int gridDim = 1;
 	for (int i = 0; i < gridDim; i++) {
 		for (int j = 0; j < gridDim; j++) {
 			SetPosition(glm::vec3((float)(j * 2) - gridDim, (i * 2) - gridDim, -15.0f));
 			shader.SetUniformMat4f("u_Model", GetMVPMatrix(m_Model));
-			shader.SetUniform1f("metallic", 0.1f +((float)i / (float)gridDim));
-			shader.SetUniform1f("roughness", 0.1f + ((float)j / (float)gridDim));
+			//shader.SetUniform1f("metallic", 0.1f +((float)i / (float)gridDim));
+			//shader.SetUniform1f("roughness", 0.1f + ((float)j / (float)gridDim));
 			GLCall(glDrawArrays(GL_TRIANGLES, 0, trianglesNumber));
 		}
 	}
