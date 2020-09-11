@@ -9,15 +9,11 @@
 CAT::Camera::Camera()
 	: m_CameraSpeed(0.01f)
 {
-	m_CameraPosition = glm::vec3(4.0f, 4.0f, 4.0f);
-	m_ViewDirection = glm::vec3(-0.614829f, -0.503806f, -0.606764f);
+	//m_CameraPosition = glm::vec3(4.0f, 4.0f, 4.0f);
+	m_CameraPosition = glm::vec3(0.0f, 0.0f, 0.0f);
+	m_ViewDirection = glm::vec3(0.0f, 0.0f, -1.0f);
 	m_UP = glm::vec3(0.0f, 1.0f, 0.0f);
 	m_SideDirection = -glm::cross(m_ViewDirection, m_UP);
-}
-
-
-CAT::Camera::~Camera()
-{
 }
 
 glm::mat4 CAT::Camera::GetViewMatrix()
@@ -74,6 +70,32 @@ void CAT::Camera::UpdateCamera(GLFWwindow * window)
 		MoveLeft();
 	}
 
+	state = glfwGetKey(window, GLFW_KEY_K);
+	if (state == GLFW_PRESS)
+	{
+		m_CameraPosition = glm::vec3(-4.77f,-2.60f,-10.0f);
+		m_ViewDirection = glm::vec3(0.5955f,0.2377f, -0.7673f);
+	}
+
+
+	state = glfwGetKey(window, GLFW_KEY_L);
+	if (state == GLFW_PRESS)
+	{
+		m_CameraPosition = glm::vec3(-1.0f, -1.0f, -9.0f);
+		m_ViewDirection = glm::vec3(0.0f, 0.0f, -1.0f);
+	}
+
+
+	state = glfwGetKey(window, GLFW_KEY_I);
+	if (state == GLFW_PRESS)
+	{
+		m_CameraPosition = glm::vec3(-0.2198f, 3.1057f, -11.0873f);
+		m_ViewDirection = glm::vec3(-0.1535f, -0.5141f, -0.8438f);
+	}
+
+	//std::cout << m_CameraPosition.x << "  " << m_CameraPosition.y << "  " << m_CameraPosition.z << "  " << std::endl;
+
+	//std::cout << m_ViewDirection.x << "  " << m_ViewDirection.y << "  " << m_ViewDirection.z << "  " << std::endl;
 }
 
 glm::mat4 CAT::Camera::GetProjectionMatrix()
@@ -92,6 +114,11 @@ void CAT::Camera::SetCameraView(glm::vec2 & delta)
 	//m_SideDirection = glm::cross(m_ViewDirection, m_UP);
 	//m_ViewDirection = glm::mat3(glm::rotate(delta.y * 0.002f, m_SideDirection)) * m_ViewDirection;
 	//m_UP = glm::cross(m_SideDirection, m_ViewDirection);
+}
+
+glm::vec3 CAT::Camera::GetCameraPosition()
+{
+	return m_CameraPosition;
 }
 
 void CAT::Camera::MoveForward()

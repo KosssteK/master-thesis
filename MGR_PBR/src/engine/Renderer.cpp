@@ -9,7 +9,7 @@ CAT::Renderer::Renderer() {
 		std::cout << "error during glfwInit()" << std::endl;
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(1280, 720, "Hello World", NULL, NULL);
+	window = glfwCreateWindow(1280, 720, "CAT Engine", NULL, NULL);
 	if (!window)
 	{
 		std::cout << "glfwTerminate()" << std::endl;
@@ -34,7 +34,7 @@ CAT::Renderer::Renderer() {
 	GLCall(glCullFace(GL_BACK));
 	GLCall(glEnable(GL_BLEND));
 	GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-	GLCall(glClearColor(0.2f, 0.3f, 0.8f, 1.0f));
+	GLCall(glClearColor(0.1f, 0.1f, 0.1f, 1.0f));
 }
 
 CAT::Renderer::~Renderer()
@@ -50,9 +50,8 @@ void CAT::Renderer::StartMainLoop()
 		/* Render here */
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		camera.UpdateCamera(window);
+		Camera::getSingleton().UpdateCamera(window);
 
-		Update();
 		UpdateTransform();
 		Draw();
 		/* Swap front and back buffers */
@@ -71,20 +70,10 @@ CAT::Container * CAT::Renderer::AddChild(CAT::Container &container)
 	return &container;
 }
 
-
-void CAT::Renderer::Update()
-{
-	for (int i = 0; i < children.size(); i++) {
-		children[i]->Update();
-	}
-}
-
 void CAT::Renderer::UpdateTransform()
 {
-	//std::cout << "UPDATE TRANSFORM RENDERER" << std::endl;
-	r += 0.01;
-	glm::mat4 projection = camera.GetProjectionMatrix();
-	glm::mat4 view = camera.GetViewMatrix();
+	glm::mat4 projection = Camera::getSingleton().GetProjectionMatrix();
+	glm::mat4 view = Camera::getSingleton().GetViewMatrix();
 	glm::mat4 model(1.0f);
 
 

@@ -32,65 +32,67 @@ in vec2 f_textureCoords;
 in vec3 f_position;
 in vec3 f_normal;
 
-vec3 cameraPosition = vec3(4.0, 4.0, 4.0); //later to be uniform
+uniform vec3 u_CameraPosition;
 
 uniform sampler2D u_Texture;
+uniform sampler2D u_Rough;
+uniform sampler2D u_Metal;
+uniform sampler2D u_Normal;
 
-vec3 albedo = texture(u_Texture, f_textureCoords).xyz;
-//vec3 albedo = vec3(20.0,0.0,0.0)//texture(u_Texture, f_textureCoords).xyz;
-float metallic = 1.0;
-float roughness = 0.1;
+
+
 float ao = 1.0;
-
-//uniform vec3 albedo;
-//uniform float metallic;
-//uniform float roughness;
-//uniform float ao;
-
-//uniform vec3 lightPositions[4];
-//uniform vec3 lightColors[4];
 
 vec3 lightPositions[4] = { vec3(4.0, 4.0, 0.0), vec3(4.0, -4.0, 0.0), vec3(-4.0, 4.0, 0.0), vec3(-4.0, -4.0, 0.0) };
 vec3 lightColors[4] = { vec3(300.0,300.0,300.0), vec3(300.0,300.0,300.0), vec3(300.0,300.0,300.0), vec3(300.0,300.0,300.0) };
 
 const float PI = 3.14159265359;
 
-float DistributionGGX(vec3 N, vec3 H, float roughness);
-float GeometrySchlickGGX(float NdotV, float roughness);
-float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness);
+float NormalDistributionFunction(vec3 N, vec3 H, float roughness);
+float GeometryGGX(float NdotV, float roughness);
+float GeometryFunction(vec3 N, vec3 V, vec3 L, float roughness);
 vec3 fresnelSchlick(float cosTheta, vec3 F0);
+
+vec3 getNormalFromMap();
 
 void main()
 {
+	vec3 albedo = pow(texture(u_Texture, f_textureCoords).rgb, vec3(2.2));
+	float roughness = texture(u_Rough, f_textureCoords).r;
+	float metallic = texture(u_Metal, f_textureCoords).r;
+
+
 	vec3 N = normalize(f_normal);
-	vec3 V = normalize(cameraPosition);
+
+
+	vec3 V = normalize(u_CameraPosition - f_position);
+
+
+	vec3 F0 = vec3(0.04);
+	F0 = mix(F0, albedo, metallic);
 
 	vec3 Lo = vec3(0.0);
 	for (int i = 0; i < 4; i++) {
+
 		vec3 L = normalize(lightPositions[i] - f_position); //light direction vector
 		vec3 H = normalize(V + L); // halfway vector
-
 		float distance = length(lightPositions[i] - f_position);
 		float attenuation = 1.0 / (distance * distance);
 		vec3 radiance = lightColors[i] * attenuation;
 
-		vec3 F0 = vec3(0.04);
-		F0 = mix(F0, albedo, metallic);
 
-		float NDF = DistributionGGX(N, H, roughness);
-		float G = GeometrySmith(N, V, L, roughness);
+		float NDF = NormalDistributionFunction(N, H, roughness);
+		float G = GeometryFunction(N, V, L, roughness);
 		vec3 F = fresnelSchlick(max(dot(H, V), 0.0), F0);
 
-		vec3 numerator = NDF * G * F;
+		vec3 nominator = NDF * G * F;
 		float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0);
-		vec3 specular = numerator / max(denominator, 0.001);
+		vec3 specular = nominator / max(denominator, 0.001);
 
 		vec3 kS = F;
 		vec3 kD = vec3(1.0) - kS;
 
 		kD *= 1.0 - metallic;
-
-		const float PI = 3.14159265359;
 
 		float NdotL = max(dot(N, L), 0.0);
 		Lo += (kD * albedo / PI + specular) * radiance * NdotL;
@@ -110,7 +112,7 @@ vec3 fresnelSchlick(float cosTheta, vec3 F0) {
 	return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
 }
 
-float DistributionGGX(vec3 N, vec3 H, float roughness)
+float NormalDistributionFunction(vec3 N, vec3 H, float roughness)
 {
 	float a = roughness * roughness;
 	float a2 = a * a;
@@ -124,7 +126,7 @@ float DistributionGGX(vec3 N, vec3 H, float roughness)
 	return num / denom;
 }
 
-float GeometrySchlickGGX(float NdotV, float roughness)
+float GeometryGGX(float NdotV, float roughness)
 {
 	float r = (roughness + 1.0);
 	float k = (r*r) / 8.0;
@@ -134,12 +136,12 @@ float GeometrySchlickGGX(float NdotV, float roughness)
 
 	return num / denom;
 }
-float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
+float GeometryFunction(vec3 N, vec3 V, vec3 L, float roughness)
 {
 	float NdotV = max(dot(N, V), 0.0);
 	float NdotL = max(dot(N, L), 0.0);
-	float ggx2 = GeometrySchlickGGX(NdotV, roughness);
-	float ggx1 = GeometrySchlickGGX(NdotL, roughness);
+	float ggx2 = GeometryGGX(NdotV, roughness);
+	float ggx1 = GeometryGGX(NdotL, roughness);
 
 	return ggx1 * ggx2;
 }

@@ -10,7 +10,6 @@ namespace CAT {
 
 	private:
 		GLFWwindow* window;
-		Camera camera;
 		std::vector<CAT::Container*> children;
 		float r = 0;
 	public:
@@ -19,7 +18,6 @@ namespace CAT {
 
 		void StartMainLoop();
 		CAT::Container* AddChild(CAT::Container &container);
-		void Update();
 		void UpdateTransform();
 		void Draw();
 	};

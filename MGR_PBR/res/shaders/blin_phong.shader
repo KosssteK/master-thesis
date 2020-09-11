@@ -36,9 +36,9 @@ in vec3 f_Normal;
 
 uniform sampler2D u_Texture;
 
+uniform vec3 u_CameraPosition;
 vec3 lightColor = vec3(1.0, 1.0, 1.0);  // uniform later
 vec3 lightPosition = vec3(0.0, 0.0, 0.0);  // uniform later
-vec3 observerPosition = vec3(4.0f, 4.0f, 4.0f);  // uniform later
 
 void main()
 {
@@ -54,14 +54,14 @@ void main()
 	vec3 diffuse = diff * lightColor;
 
 	//specular
-	float specularStrength = 0.5;
-	vec3 observerDirection = normalize(observerPosition - f_FragPos);
+	float specularStrength = 1.0;
+	vec3 observerDirection = normalize(u_CameraPosition - f_FragPos);
 	vec3 reflectDirection = reflect(-lightDirection, normalizedNormal);
 
-	float spec = pow(max(dot(observerDirection, reflectDirection), 0.0), 256);
+	float spec = pow(max(dot(observerDirection, reflectDirection), 0.0), 32);
 	vec3 specular = specularStrength * spec * lightColor;
 
-	vec3 result = (ambient + diffuse) * texture(u_Texture, f_TexCoord).xyz;
+	vec3 result = (ambient+ specular) * texture(u_Texture, f_TexCoord).xyz;
 	color = vec4(result, 1.0);
 };
 

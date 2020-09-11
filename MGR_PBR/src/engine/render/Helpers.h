@@ -19,12 +19,22 @@ namespace CAT {
 		std::string objectPath;
 		std::string texturePath;
 		std::string shaderPath;
+		std::string rghPath;
+		std::string mtlPath;
+		std::string nrmPath;
+
 
 		Properties(	const std::string & object,
 					const std::string & texture,
+					const std::string & rgh,
+					const std::string & mtl,
+					const std::string & nrm,
 					const std::string & shader) {
 			objectPath = object;
 			texturePath = texture;
+			rghPath = rgh;
+			mtlPath = mtl;
+			nrmPath = nrm;
 			shaderPath = shader;
 		}
 	};
