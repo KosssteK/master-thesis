@@ -41,27 +41,16 @@ uniform sampler2D u_Normal;
 
 
 
-////vec3 albedo = vec3(20.0,0.0,0.0)//texture(u_Texture, f_textureCoords).xyz;
-//float metallic = 1.0;
-//float roughness = 0.1;
 float ao = 1.0;
-
-//uniform vec3 albedo;
-//uniform float metallic;
-//uniform float roughness;
-//uniform float ao;
-
-//uniform vec3 lightPositions[4];
-//uniform vec3 lightColors[4];
 
 vec3 lightPositions[4] = { vec3(4.0, 4.0, 0.0), vec3(4.0, -4.0, 0.0), vec3(-4.0, 4.0, 0.0), vec3(-4.0, -4.0, 0.0) };
 vec3 lightColors[4] = { vec3(300.0,300.0,300.0), vec3(300.0,300.0,300.0), vec3(300.0,300.0,300.0), vec3(300.0,300.0,300.0) };
 
 const float PI = 3.14159265359;
 
-float DistributionGGX(vec3 N, vec3 H, float roughness);
-float GeometrySchlickGGX(float NdotV, float roughness);
-float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness);
+float NormalDistributionFunction(vec3 N, vec3 H, float roughness);
+float GeometryGGX(float NdotV, float roughness);
+float GeometryFunction(vec3 N, vec3 V, vec3 L, float roughness);
 vec3 fresnelSchlick(float cosTheta, vec3 F0);
 
 vec3 getNormalFromMap();
@@ -74,8 +63,6 @@ void main()
 
 
 	vec3 N = normalize(f_normal);
-	//vec3 N = getNormalFromMap();
-	//vec3 N = texture(u_Normal, f_textureCoords).xyz;
 
 
 	vec3 V = normalize(u_CameraPosition - f_position);
@@ -94,8 +81,8 @@ void main()
 		vec3 radiance = lightColors[i] * attenuation;
 
 
-		float NDF = DistributionGGX(N, H, roughness);
-		float G = GeometrySmith(N, V, L, roughness);
+		float NDF = NormalDistributionFunction(N, H, roughness);
+		float G = GeometryFunction(N, V, L, roughness);
 		vec3 F = fresnelSchlick(max(dot(H, V), 0.0), F0);
 
 		vec3 nominator = NDF * G * F;
@@ -125,7 +112,7 @@ vec3 fresnelSchlick(float cosTheta, vec3 F0) {
 	return F0 + (1.0 - F0) * pow(1.0 - cosTheta, 5.0);
 }
 
-float DistributionGGX(vec3 N, vec3 H, float roughness)
+float NormalDistributionFunction(vec3 N, vec3 H, float roughness)
 {
 	float a = roughness * roughness;
 	float a2 = a * a;
@@ -139,7 +126,7 @@ float DistributionGGX(vec3 N, vec3 H, float roughness)
 	return num / denom;
 }
 
-float GeometrySchlickGGX(float NdotV, float roughness)
+float GeometryGGX(float NdotV, float roughness)
 {
 	float r = (roughness + 1.0);
 	float k = (r*r) / 8.0;
@@ -149,29 +136,12 @@ float GeometrySchlickGGX(float NdotV, float roughness)
 
 	return num / denom;
 }
-float GeometrySmith(vec3 N, vec3 V, vec3 L, float roughness)
+float GeometryFunction(vec3 N, vec3 V, vec3 L, float roughness)
 {
 	float NdotV = max(dot(N, V), 0.0);
 	float NdotL = max(dot(N, L), 0.0);
-	float ggx2 = GeometrySchlickGGX(NdotV, roughness);
-	float ggx1 = GeometrySchlickGGX(NdotL, roughness);
+	float ggx2 = GeometryGGX(NdotV, roughness);
+	float ggx1 = GeometryGGX(NdotL, roughness);
 
 	return ggx1 * ggx2;
-}
-
-vec3 getNormalFromMap()
-{
-	vec3 tangentNormal = texture(u_Normal, f_textureCoords).xyz * 2.0 - 1.0;
-
-	vec3 Q1 = dFdx(f_position);
-	vec3 Q2 = dFdy(f_position);
-	vec2 st1 = dFdx(f_textureCoords);
-	vec2 st2 = dFdy(f_textureCoords);
-
-	vec3 N = normalize(f_normal);
-	vec3 T = normalize(Q1*st2.t - Q2 * st1.t);
-	vec3 B = -normalize(cross(N, T));
-	mat3 TBN = mat3(T, B, N);
-
-	return normalize(TBN * tangentNormal);
 }

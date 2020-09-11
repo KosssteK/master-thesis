@@ -9,7 +9,7 @@ CAT::Renderer::Renderer() {
 		std::cout << "error during glfwInit()" << std::endl;
 
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(1280, 720, "Hello World", NULL, NULL);
+	window = glfwCreateWindow(1280, 720, "CAT Engine", NULL, NULL);
 	if (!window)
 	{
 		std::cout << "glfwTerminate()" << std::endl;
@@ -34,7 +34,7 @@ CAT::Renderer::Renderer() {
 	GLCall(glCullFace(GL_BACK));
 	GLCall(glEnable(GL_BLEND));
 	GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-	//GLCall(glClearColor(0.2f, 0.3f, 0.8f, 1.0f));
+	GLCall(glClearColor(0.1f, 0.1f, 0.1f, 1.0f));
 }
 
 CAT::Renderer::~Renderer()

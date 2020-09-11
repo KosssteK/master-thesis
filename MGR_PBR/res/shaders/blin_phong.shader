@@ -58,10 +58,10 @@ void main()
 	vec3 observerDirection = normalize(u_CameraPosition - f_FragPos);
 	vec3 reflectDirection = reflect(-lightDirection, normalizedNormal);
 
-	float spec = pow(max(dot(observerDirection, reflectDirection), 0.0), 128);
+	float spec = pow(max(dot(observerDirection, reflectDirection), 0.0), 32);
 	vec3 specular = specularStrength * spec * lightColor;
 
-	vec3 result = (ambient + diffuse + specular) * texture(u_Texture, f_TexCoord).xyz;
+	vec3 result = (ambient+ specular) * texture(u_Texture, f_TexCoord).xyz;
 	color = vec4(result, 1.0);
 };
 

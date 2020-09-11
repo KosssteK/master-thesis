@@ -152,8 +152,8 @@ void CAT::Object::LoadObj(const std::string & path)
 void CAT::Object::Update()
 {
 	//this should be empty, debug only
-	rotate += 0.1;
-	SetRotation(glm::vec3(0.0, rotate, 0.0));
+	//rotate += 0.1;
+	//SetRotation(glm::vec3(0.0, rotate, 0.0));
 }
 
 void CAT::Object::UpdateTransform(glm::mat4 projection, glm::mat4 view, glm::mat4 model)
